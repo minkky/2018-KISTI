@@ -1,0 +1,117 @@
+@font-face{
+	font-family: square;
+	src: url("/font/NanumSquareR.ttf");
+}
+
+@font-face{
+	font-family: squareB;
+	src: url("/font/NanumSquareEB.ttf");
+}
+
+*{
+	font-family: square;
+	font-size: 1.05em;
+}
+
+html, body {
+	overflow: auto;
+	height: 100%;
+	margin : 0;
+	max-height: 100%;
+}
+
+a {
+	color: #00B7FF;
+}
+
+.index_all{
+	margin: auto;
+}
+
+.index_title{
+	font-family: squareB;
+	text-align: center;
+	margin-top: 10%;
+}
+
+.index_topdiv{
+	text-align: center;
+	margin-top: 4%;
+}
+
+.index_div{
+	width: 40%;
+	margin: 3% auto;
+}
+
+.search_all{
+	height: 100%;
+}
+.search_div{
+	display: table;
+	text-align: center;
+	height: 100%;
+	width: 100%;
+}
+
+.search_div p{
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+	width: 100%;
+}
+
+#search_title, #search_table_title{
+	font-weight: 900;
+}
+
+#search_table{
+	text-align: center;
+	margin: auto;
+	width: 94%;
+	padding: 0;
+}
+
+thead {
+	font-family: square;
+	font-weight: normal;
+}
+
+.table td {
+	vertical-align: middle;
+}
+
+#search_condition{
+	font-family: squareB;
+}
+
+#number_input, #taxi_id{
+	width: 80%;
+	display : inline;
+}
+
+#print_taxi, #print_taxi_id{
+	font-size: 0.8em;
+	text-align: left;
+}
+
+#print_taxi{
+	text-indent: 4%;
+	font-size: 0.9em;
+}
+
+#print_taxi_div {
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+#taxi_table{
+	text-align: center;
+	margin: auto;
+	width: 94%;
+	padding: 0;
+}
+
+input::-webkit-input-placeholder { text-align: right; }
+input::-moz-input-placeholder { text-align: right; }
+input::-ms-input-placeholder { text-align: right; }

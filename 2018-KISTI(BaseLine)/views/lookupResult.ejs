@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+<div class="search_all">
+    <div class="search_div">
+        <%if(result_count == 0 || result == undefined){%>
+        <p>
+            검색 조건에 해당되는 결과가 존재하지 않습니다. <br><br>
+            <a href="/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Back</a>
+        </p>
+        <%}else{
+        %>
+        <table class="table table-hover" id="search_table">
+            <thead><tr>
+                <th colspan="6" style="line-height: 2em;">
+                    <span id="search_condition">[ <%=within_time%> min, <%=within_distance%> m ] </span>
+                    검색 결과는 다음과 같습니다. ( <%=mod%> ver. )
+                    <span style="float: right;">
+                        <a href="/" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">Back</a>
+                    </span>
+                </th>
+            </tr></thead>
+            <tbody>
+            <tr id="search_table_title">
+                <td style="width: 20%;">LOC</td>
+                <td>TIME</td>
+                <td>TEMP</td>
+                <td style="width: 20%;">LOC</td>
+                <td>TIME</td>
+                <td>HUM</td>
+            </tr>
+            <%
+            for(var i=0; i<result_count; i++){
+                var count = result[i].split('}},');
+                count = count.length;
+                for(var j=0; j<count; j++){ %>
+                <tr>
+                    <td>
+                        <%=result[i].split(' ')[0]%>, <%=result[i].split(' ')[1]%>
+                    </td>
+                    <td>
+                        <%=result[i].split(' ')[2]%>
+                    </td>
+                    <td>
+                        <%=(result[i].split(' ')[3]).split(':')[1]%>
+                    </td>
+                    <td>
+                        <%=(result[i].split(' ')[4]).split('}},')[j].split('location')[1].split('[')[1].split(']')[0].replace(',',', ')%>%>
+
+                    </td>
+                    <td>
+                        <%=(result[i].split(' ')[4]).split('}},')[j].split('time')[1].split('\"')[2]%>
+                    </td>
+                    <td>
+                        <%=(result[i].split(' ')[4]).split('}},')[j].split('HUM')[1].split(':')[1].replace('}}','').replace(']','')%>
+                    </td>
+                    <%}%>
+                </tr>
+                <%
+                }
+            %>
+            <%}%>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+
+</html>

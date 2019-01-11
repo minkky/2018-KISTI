@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+
+<body>
+<div class="index_all">
+    <h1 class="index_title"><%= title %></h1>
+    <div class="index_topdiv">
+        <!--<button id="loadButton" onclick="location.href='/buttonClicked'" class="btn btn-info">load File</button>-->
+    </div>
+    <div class="index_div">
+        <form method="post" action="/search">
+            <table class="table" id="search_table">
+                <tr>
+                    <th style="vertical-align: middle;">TAXI</th>
+                    <td>
+                        <input type="text" name="taxi_id" class="form-control" id="taxi_id" placeholder="IK">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle;">Time</th>
+                    <td>
+                        <input type="text" name="within_time" class="form-control" id="number_input"
+                               placeholder="minute">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle;">Distance</th>
+                    <td>
+                        <input type="text" name="within_distance" id="number_input" class="form-control"
+                               placeholder="˚" id="meter_placeholder">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right;">
+                        <input type="submit" name="submit" value="search" class="btn btn-danger">
+                        <input type="submit" name="submit" value="lookup" class="btn btn-success">
+                        <input type="reset" name="reset" value="reset" class="btn btn-light">
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <table id="taxi_table" class="table">
+                <tr id="print_taxi">
+                    <td colspan="2">
+                        <b>Collection LIST</b>
+                    </td>
+                </tr>
+                <tr id="print_taxi_id">
+                    <td colspan="2">
+                        <div id="print_taxi_div">
+                            <%
+                            for(i = 1; i <= len; i++){
+                            %>
+                                <%= result[i - 1] %>
+                                <% if(i % 10 == 0){ %>
+                                    <br>
+                                <% } %>
+                            <%
+                            } %>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

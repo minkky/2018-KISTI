@@ -1,0 +1,12 @@
+*.pyc
+*.csv
+*.txt
+*.json
+./public/load/*.json
+node_modules/
+.idea/vcs.xml
+.idea/misc.xml
+.idea/2018-KISTI.iml
+.idea/workspace.xml
+.idea/modules.xml
+.idea/jsLibraryMappings.xml

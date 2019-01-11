@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+</head>
+
+<body>
+<div class="setting_all">
+    <h1 class="setting_title"><%= title %></h1>
+    <div class="setting_div">
+        <form method="post" action="/setting/btnClicked" id="setting_form">
+            <table class="table" id="setting_table">
+                <tr>
+                    <th rowspan="2" class="td_title">cell size</th>
+                    <th>x<span class="small_text">size</span>(=y<span class="small_text">size</span>)</th>
+                    <td><input type="text" name="partition_distance_interval" placeholder="˚"></td>
+                </tr>
+                <tr>
+                    <th>t<span class="small_text">size</span></th>
+                    <td><input type="text" name="partition_time_interval" placeholder="h, m, s "></td>
+                </tr>
+
+                <tr>
+                    <th rowspan="2" class="td_title">max tolerance</th>
+                    <th>T<span class="small_text">xmax</span>(=T<span class="small_text">ymax</span>)</th>
+                    <td><input type="text" name="near_smax" placeholder="˚"></td>
+                </tr>
+                <tr>
+                    <th>T<span class="small_text">tmax</span></th>
+                    <td><input type="text" name="near_tmax" placeholder="s "></td>
+                </tr>
+
+                <tr>
+                    <th rowspan="3" class="td_title">min coordinates</th>
+                    <th>x<span class="small_text">min</span></th>
+                    <td><input type="text" name="min_lng" placeholder="˚"></td>
+                </tr>
+                <tr>
+                    <th>y<span class="small_text">min</span></th>
+                    <td><input type="text" name="min_lat" placeholder="˚"></td>
+                </tr>
+                <tr>
+                    <th>t<span class="small_text">min</span></th>
+                    <td><input type="text" name="min_time" placeholder="YYYY-MM-DDTHH:mm:dd "></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td style="text-align:right;">
+                        <button class="btn btn-dark" name="submit" type="submit" value="setting">build</button>
+                        <!--<button class="btn btn-white" name="submit" type="submit" value="search">search</button>-->
+                        <a class="btn btn-danger" href="/">back</a>
+                    </td>
+                </tr>
+                <!-- style="vertical-align: middle;"-->
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

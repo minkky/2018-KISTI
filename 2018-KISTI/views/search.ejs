@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Exo+2" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <style>
+        .card-header, .card-title {
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .card-header {
+            height: 15%;
+        }
+
+        .card {
+            font-size: 0.9em;
+        }
+
+    </style>
+</head>
+<body>
+<div class="search_all">
+    <h1 class="search_title"><%= title %></h1>
+    <div class="card mb-4 shadow-sm" id="search_leftupdiv">
+        <div class="card-header">
+            INFO
+        </div>
+        <div class="card-body">
+            <h2 class="card-title">Partition</h2>
+            <% if(distance_interval != undefined) { %>
+                x<span class="small_text">size</span> : <%= distance_interval %>˚<br>
+                y<span class="small_text">size</span> : <%= distance_interval %>˚<br>
+            t<span class="small_text">size</span> : <%= time_interval %>s
+            <% } else { %>
+                Partition doesn't exist
+            <% } %>
+        </div>
+    </div>
+    <div class="search_div">
+        <form method="post" action="/search/btnClicked">
+            <table class="table" id="search_table">
+                <tr>
+                    <th style="vertical-align: middle;">Thing ID(Taxi ID)</th>
+                    <td>
+                        <input type="text" name="thingId" class="form-control" id="number_input"
+                               placeholder="ONLY TAXI ID">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle;">T<span class="small_text">x</span>(=T<span class="small_text">y</span>)</th>
+                    <td>
+                        <input type="text" name="distance_interval" id="number_input" class="form-control"
+                               placeholder="˚" id="meter_placeholder">
+                    </td>
+                </tr>
+                <tr>
+                    <th style="vertical-align: middle;">T<span class="small_text">t</span></th>
+                    <td>
+                        <input type="text" name="time_interval" class="form-control" id="number_input"
+                               placeholder="s">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: right;">
+                        <input type="submit" name="submit" value="search" class="btn btn-danger">
+                        <a href="/" class="btn btn-dark">back</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" id="taxi_list">Taxi ID: <br>
+                        <%
+                        for(i = 0; i < len; i++){ %>
+                            <%= collections[i] %>
+                        <% } %>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>
