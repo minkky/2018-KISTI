@@ -120,36 +120,38 @@ router.post('/search', function (req, res, next) {
             function (resultPath, type, taxi_id, within_time, within_distance, ids, callback) {
                 global.done = "no";
                 let fileName = path.join(resultPath, "result" + ids + within_time + "_" + within_distance + ".txt");
-                callback(null, fileName, type, within_time, within_distance, taxi_id.sort());
+                callback(null, fileName, type, within_time, within_distance, taxi_id.sort(), ids);
             },
-            function (fileName, type, within_time, within_distance, taxi_id, callback) {
+            function (fileName, type, within_time, within_distance, taxi_id, ids, callback) {
                 fs.exists(fileName, function (exists) {
                     if (exists) {
                         fs.unlink(fileName, (err) => {
                             if (err) throw  err;
                             console.log(fileName + " removed");
-                            callback(null, fileName, type, within_time, within_distance, taxi_id);
+                            callback(null, fileName, type, within_time, within_distance, taxi_id, ids);
                         });
                     }
                     else {
                         console.log(fileName + " not exist");
-                        callback(null, fileName, type, within_time, within_distance, taxi_id);
+                        callback(null, fileName, type, within_time, within_distance, taxi_id, ids);
                     }
                 });
             }
         ],
-        function (err, fileName, type, within_time, within_distance, taxi_id) {
+        function (err, fileName, type, within_time, within_distance, taxi_id, ids) {
             if (err) ;
             if (type == "search") {
                 let startTime = process.hrtime();
                 INLSearch(within_time, within_distance, taxi_id.sort(), fileName)
                     .then(function (result) {
                         console.log(result);
+                        let fileLink = "http://localhost:3000/"+ "result/result" + ids + within_time + "_"+ within_distance + ".txt";
                         res.render('searchResult', {
                             mod: 'base',
                             title: 'Join Result - base ver.',
                             within_time: within_time,
                             within_distance: within_distance,
+                            fileLink : fileLink
                         });
                     });
             }
@@ -207,14 +209,14 @@ function getQuery(res) {
         let min = time.getUTCMinutes();
         let sec = time.getUTCSeconds();
         let utc = new Date(Date.UTC(year, mon - 1, date, hour, min, sec));
-        let gte = moment(utc).add(-1 * within_time, 'm').toISOString();
-        let lte = moment(utc).add(within_time, 'm').toISOString();
+        let gte_time = moment(utc).add(-1 * within_time, 'm').toISOString();
+        let lte_time = moment(utc).add(within_time, 'm').toISOString();
 
         let query = {
             $and: [
                 {$and: [{"location.0": {$gte: floor(lng - within_distance, sig_lng)}}, {"location.0": {$lte: floor(lng + within_distance, sig_lng)}}]},
                 {$and: [{"location.1": {$gte: floor(lat - within_distance, sig_lat)}}, {"location.1": {$lte: floor(lat + within_distance, sig_lat)}}]},
-                {time: {$gte: gte, $lte: lte}}
+                {time: {$gte: gte_time, $lte: lte_time}}
             ]
         };
         //console.log(JSON.stringify(query1))
@@ -831,8 +833,8 @@ let lookupSearch = function (within_time, within_distance, res, taxi_id, startTi
                                 let hour = Number(tt[0]), mm = Number(tt[1]), sec = Number(tt[2].split('.')[0]);
                                 let mil = tt[2].split('.').length != 1 ? tt[2].split('.')[1].split('Z')[0] : 0;
                                 let utc = new Date(Date.UTC(year, mon - 1, dd, hour, mm, sec, mil));
-                                let gte = moment(utc).add(-1 * within_time, 'm').toISOString();
-                                let lte = moment(utc).add(within_time, 'm').toISOString();
+                                let gte_time = moment(utc).add(-1 * within_time, 'm').toISOString();
+                                let lte_time = moment(utc).add(within_time, 'm').toISOString();
 
                                 let agg_query = [{
                                     $lookup: {
@@ -845,7 +847,7 @@ let lookupSearch = function (within_time, within_distance, res, taxi_id, startTi
                                                             $centerSphere: [[Number(lng), Number(lat)], radius_dis]
                                                         }
                                                     },
-                                                    time: {$gte: gte, $lte: lte}
+                                                    time: {$gte: gte_time, $lte: lte_time}
                                                 }
                                             }
                                         ],
